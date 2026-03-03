@@ -1,9 +1,12 @@
 package com.talkevents.jpa.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 import java.io.Serial;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -41,6 +44,10 @@ public class Speaker implements java.io.Serializable {
     public String getBio() {
         return bio;
     }
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @OneToMany(mappedBy = "speaker", fetch = FetchType.LAZY)
+    private Set<Session> sessions = new HashSet<Session>();
 
     public void setBio(String bio) {
         this.bio = bio;

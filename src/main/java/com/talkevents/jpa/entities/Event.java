@@ -42,6 +42,9 @@ public class Event implements java.io.Serializable {
     )
     private Set<Attendee> attendees = new HashSet<>();
 
+    @OneToOne(mappedBy = "event", cascade = CascadeType.ALL)
+    private Location location;
+
     public void setId(UUID id) {
         this.id = id;
     }
@@ -76,5 +79,13 @@ public class Event implements java.io.Serializable {
 
     public void setAttendees(Set<Attendee> attendees) {
         this.attendees = attendees;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
     }
 }

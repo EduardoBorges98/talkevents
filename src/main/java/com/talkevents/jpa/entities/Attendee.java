@@ -25,9 +25,23 @@ public class Attendee implements java.io.Serializable {
     @Column(length = 100)
     private String email;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @ManyToMany(mappedBy = "attendees", fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "attendee_event",
+            joinColumns = @JoinColumn(name = "attendee_id"),
+            inverseJoinColumns = @JoinColumn(name = "event_id")
+    )
     private Set<Event> events = new HashSet<>();
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "attendee_session",
+            joinColumns = @JoinColumn(name = "attendee_id"),
+            inverseJoinColumns = @JoinColumn(name = "session_id")
+    )
+    private Set<Session> sessions = new HashSet<>();
+
+
 
     public UUID getId() {
         return id;
@@ -51,5 +65,21 @@ public class Attendee implements java.io.Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Set<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(Set<Event> events) {
+        this.events = events;
+    }
+
+    public Set<Session> getSessions() {
+        return sessions;
+    }
+
+    public void setSessions(Set<Session> sessions) {
+        this.sessions = sessions;
     }
 }

@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 
 import java.io.Serial;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -28,6 +30,12 @@ public class Session implements java.io.Serializable {
     @ManyToOne
     @JoinColumn(name = "event_id", nullable = false)
     private Event event;
+
+    private Set<Attendee> attendees = new HashSet<Attendee>();
+
+    @ManyToOne
+    @JoinColumn(name = "speakerId")
+    private Speaker speaker;
 
     public UUID getId() {
         return id;
@@ -67,5 +75,21 @@ public class Session implements java.io.Serializable {
 
     public void setEvent(Event event) {
         this.event = event;
+    }
+
+    public Set<Attendee> getAttendees() {
+        return attendees;
+    }
+
+    public void setAttendees(Set<Attendee> attendees) {
+        this.attendees = attendees;
+    }
+
+    public Speaker getSpeaker() {
+        return speaker;
+    }
+
+    public void setSpeaker(Speaker speaker) {
+        this.speaker = speaker;
     }
 }
